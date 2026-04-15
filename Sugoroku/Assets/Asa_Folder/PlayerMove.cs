@@ -5,6 +5,11 @@ public class PlayerMove : MonoBehaviour
 {
     public Transform[] points; // ƒ}ƒX‚ÌˆÊ’u
     private int currentIndex = 0;
+    void Start()
+    {
+        currentIndex = 0;
+        transform.position = points[currentIndex].position;
+    }
 
     public void Move(int steps)
     {
