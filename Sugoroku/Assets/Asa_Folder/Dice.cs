@@ -52,12 +52,4 @@ public class Dice : MonoBehaviour
         transform.rotation = Quaternion.identity;
         rolling = false;
     }
-
-    void Update()
-    {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            Roll();
-        }
-    }
 }
