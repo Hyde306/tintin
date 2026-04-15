@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class Dice : MonoBehaviour
 {
     public Sprite[] diceSprites; // 1〜6
+    public System.Action<int> OnDiceRolled;
 
     private SpriteRenderer sr;
     private bool rolling = false;
@@ -43,7 +44,10 @@ public class Dice : MonoBehaviour
 
         // 最終結果を表示
         sr.sprite = diceSprites[result];
+        int diceValue = result + 1;
 
+        // イベント発火
+        OnDiceRolled?.Invoke(diceValue);
         // 回転を止める
         transform.rotation = Quaternion.identity;
         rolling = false;
