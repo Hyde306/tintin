@@ -4,13 +4,15 @@ using System.Collections;
 public class PlayerMove : MonoBehaviour
 {
     public Transform[] points; // ƒ}ƒX‚ÌˆÊ’u
+    public bool isMoving = false;
+
     private int currentIndex = 0;
     void Start()
     {
         currentIndex = 0;
         transform.position = points[currentIndex].position;
     }
-
+    
     public void Move(int steps)
     {
         StartCoroutine(MoveCoroutine(steps));
@@ -26,7 +28,7 @@ public class PlayerMove : MonoBehaviour
 
             Vector3 target = points[currentIndex].position;
 
-            // ­‚µ‚¸‚ÂˆÚ“®
+            // ˆÚ“®
             while (Vector3.Distance(transform.position, target) > 0.01f)
             {
                 transform.position = Vector3.MoveTowards(
