@@ -14,12 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SAWARUNA/Menu.unity
     guid: 6dc8a859848bbfb4faada1070c21ef28
-  - enabled: 1
+  - enabled: 0
     path: Assets/SAWARUNA/Sample.unity
     guid: 1d8dd3a8140d7bc4a9bd54506e04ea24
   - enabled: 1
     path: Assets/SAWARUNA/Result.unity
     guid: ff4db4568db3e014c9ccb31a6d9761c9
+  - enabled: 1
+    path: Assets/Asa_Folder/Stage.unity
+    guid: 833028c3e38088b4db3cbc60c493ec56
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
