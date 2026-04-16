@@ -4,44 +4,46 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GameManager2 : MonoBehaviour
 {
-    public Dice dice;
-    public PlayerMove[] players;
+    public Dice2 dice2;
+    public PlayerMove2[] players2;
 
     private int currentPlayer = 0;
-    private bool isMoving = false;
+    private bool isMoving2 = false;
 
     void Start()
     {
-        dice.OnDiceRolled += OnDiceRolled;
+        dice2.OnDiceRolled += OnDiceRolled;
     }
 
     void OnDiceRolled(int value)
     {
-        if (isMoving) return;
+        if (isMoving2) return;
 
-        isMoving = true;
+        isMoving2 = true;
 
-        players[currentPlayer].Move(value);
-
+        players2[currentPlayer].Move(value);
+        Debug.Log("1");
         StartCoroutine(WaitMove());
     }
 
     System.Collections.IEnumerator WaitMove()
     {
-        while (players[currentPlayer].isMoving)
+
+        while (players2[currentPlayer].isMoving)
         {
+        Debug.Log("2");
             yield return null;
         }
-
-        isMoving = false;
-        NextTurn();
+        isMoving2 = false;
+        NextTurn2();
     }
 
-    void NextTurn()
+    void NextTurn2()
     {
-        currentPlayer++;
+        Debug.Log("ŽŸ");
 
-        if (currentPlayer >= players.Length)
+        currentPlayer++;
+        if (currentPlayer >= players2.Length)
         {
             currentPlayer = 0;
         }
@@ -50,7 +52,7 @@ public class GameManager2 : MonoBehaviour
     {
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            dice.Roll();
+            dice2.Roll();
         }
     }
 }
