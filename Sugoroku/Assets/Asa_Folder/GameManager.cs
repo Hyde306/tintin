@@ -6,15 +6,52 @@ public class GameManager : MonoBehaviour
     public Dice dice;
     public PlayerMove[] players;
     public static GameManager Instance; // どこからでも参照可能
+    public GameObject ChoicePanel; // ポイント取得ボタン
 
     private int currentPlayer = 0;
     private bool isMoving = false;
+
+    bool Next = true;
 
     void Start()
     {
         dice.OnDiceRolled += OnDiceRolled;
     }
+    // ボタンを押すまでサイコロ不可
+    void Update()
+    {
+        if (isMoving) return;
 
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && Next == true)
+        {
+            Next = false;
+            dice.Roll();
+        }
+    }
+    // ほかのスクリプトからアクセスできるようになる(シングルトン設定)
+    void Awake()
+    {
+        Instance = this;
+    }
+    // ターン交代
+    void NextTurn()
+    {
+        currentPlayer++;
+
+        if (currentPlayer >= players.Length)
+        {
+            currentPlayer = 0;
+        }
+    }
+    void EndTurn()
+    {
+        Next = true;
+        isMoving = false;
+        if(Next == true)
+        {
+            NextTurn();
+        }
+    }
     // サイコロの結果を受け取る
     void OnDiceRolled(int value)
     {
@@ -33,27 +70,9 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        isMoving = false;
-        NextTurn();
-    }
-    // ターン交代
-    void NextTurn()
-    {
-        currentPlayer++;
-
-        if (currentPlayer >= players.Length)
-        {
-            currentPlayer = 0;
-        }
+        ChoicePanel.SetActive(true); // UI表示
     }
     
-    void Update()
-    {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            dice.Roll();
-        }
-    }
     // そのマスにプレイヤーがいるかチェック
     public bool IsTileOccupied(int index)
     {
@@ -66,9 +85,22 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
-    // ほかのスクリプトからアクセスできるようになる(シングルトン設定)
-    void Awake()
+
+    // ボタン１
+    public void OnClickChoice1()
     {
-        Instance = this;
+        Debug.Log("選択1");
+
+        ChoicePanel.SetActive(false);
+        EndTurn();
+    }
+
+    // ボタン2
+    public void OnClickChoice2()
+    {
+        Debug.Log("選択2");
+
+        ChoicePanel.SetActive(false);
+        EndTurn();
     }
 }
