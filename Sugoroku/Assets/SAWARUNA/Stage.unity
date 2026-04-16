@@ -2198,7 +2198,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7322479139939081348, guid: a23feaf1d7a3acb449af59db52c27e97, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1859893173}
+      addedObject: {fileID: 1859893171}
   m_SourcePrefab: {fileID: 100100000, guid: a23feaf1d7a3acb449af59db52c27e97, type: 3}
 --- !u!1 &889038148
 GameObject:
@@ -3281,7 +3281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dice: {fileID: 1843893379}
   players:
-  - {fileID: 1859893173}
+  - {fileID: 0}
   - {fileID: 1070674218}
   - {fileID: 1932339640}
   - {fileID: 1176165431}
@@ -4264,7 +4264,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7322479139939081348, guid: a23feaf1d7a3acb449af59db52c27e97, type: 3}
   m_PrefabInstance: {fileID: 833725516}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1859893173
+--- !u!114 &1859893171
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4273,41 +4273,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1859893170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9784814bc4fe66040913c4a4d442b4ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 631c0cadac6fab64890463fa1c92f94e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
-  - {fileID: 596681877}
-  - {fileID: 1620614489}
-  - {fileID: 523076159}
-  - {fileID: 584440264}
-  - {fileID: 577281173}
-  - {fileID: 1424395900}
-  - {fileID: 995148477}
-  - {fileID: 1985924214}
-  - {fileID: 272423047}
-  - {fileID: 160225979}
-  - {fileID: 110721865}
-  - {fileID: 1603740278}
-  - {fileID: 2042364601}
-  - {fileID: 1002871688}
-  - {fileID: 889038150}
-  - {fileID: 1520403016}
-  - {fileID: 407592561}
-  - {fileID: 991331411}
-  - {fileID: 323987571}
-  - {fileID: 177803771}
-  - {fileID: 757189617}
-  - {fileID: 1133342616}
-  - {fileID: 158472110}
-  - {fileID: 1629016308}
-  - {fileID: 1144344312}
-  - {fileID: 1448320202}
-  - {fileID: 399505830}
-  - {fileID: 1115487902}
-  - {fileID: 17988810}
-  - {fileID: 55067313}
-  isMoving: 0
+  points: []
+  isMoving: 1
 --- !u!1 &1932339636 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7322479139939081348, guid: a23feaf1d7a3acb449af59db52c27e97, type: 3}
