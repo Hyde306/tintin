@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GameManager : MonoBehaviour
 {
     public Dice dice;
     public PlayerMove[] players;
+    public static GameManager Instance; // どこからでも参照可能
 
     private int currentPlayer = 0;
     private bool isMoving = false;
@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
         dice.OnDiceRolled += OnDiceRolled;
     }
 
+    // サイコロの結果を受け取る
     void OnDiceRolled(int value)
     {
         if (isMoving) return;
@@ -25,7 +26,6 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(WaitMove());
     }
-
     System.Collections.IEnumerator WaitMove()
     {
         while (players[currentPlayer].isMoving)
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         isMoving = false;
         NextTurn();
     }
-
+    // ターン交代
     void NextTurn()
     {
         currentPlayer++;
@@ -46,11 +46,29 @@ public class GameManager : MonoBehaviour
             currentPlayer = 0;
         }
     }
+    
     void Update()
     {
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             dice.Roll();
         }
+    }
+    // そのマスにプレイヤーがいるかチェック
+    public bool IsTileOccupied(int index)
+    {
+        foreach (var p in players)
+        {
+            if (p.GetCurrentIndex() == index)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    // ほかのスクリプトからアクセスできるようになる(シングルトン設定)
+    void Awake()
+    {
+        Instance = this;
     }
 }

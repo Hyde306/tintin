@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerMove : MonoBehaviour
 {
     public Transform[] points; // マスの位置
-    public bool isMoving = false;
+    public bool isMoving = false; // 移動中かどうか
 
     private int currentIndex = 0;
     void Start()
@@ -18,17 +18,29 @@ public class PlayerMove : MonoBehaviour
         StartCoroutine(MoveCoroutine(steps));
     }
 
+    // 移動処理
     IEnumerator MoveCoroutine(int steps)
     {
+        isMoving = true;
+
         for (int i = 0; i < steps; i++)
         {
-            if (currentIndex >= points.Length - 1) yield break;
+            int nextIndex = currentIndex + 1;
+            
+            if (nextIndex >= points.Length) break;
 
-            currentIndex++;
+            // 他のプレイヤーがいたらスキップ
+            while (GameManager.Instance.IsTileOccupied(nextIndex))
+            {
+                nextIndex++;
+                if (nextIndex >= points.Length) break;
+            }
+
+            currentIndex = nextIndex;
 
             Vector3 target = points[currentIndex].position;
 
-            // 移動
+            // 移動スピード
             while (Vector3.Distance(transform.position, target) > 0.01f)
             {
                 transform.position = Vector3.MoveTowards(
@@ -39,7 +51,14 @@ public class PlayerMove : MonoBehaviour
                 yield return null;
             }
 
-            yield return new WaitForSeconds(0.1f); // 1マスごとに間を作る
+            yield return new WaitForSeconds(0.1f);
         }
+
+        isMoving = false;
+    }
+    // 現在のマス番号を返す
+    public int GetCurrentIndex()
+    {
+        return currentIndex;
     }
 }
