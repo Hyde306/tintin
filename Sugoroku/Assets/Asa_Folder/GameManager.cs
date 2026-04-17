@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        ChoicePanel.SetActive(false);
         dice.OnDiceRolled += OnDiceRolled;
     }
     // ボタンを押すまでサイコロ不可
