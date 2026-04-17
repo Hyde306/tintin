@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +8,10 @@ public class GameManager : MonoBehaviour
     public PlayerMove[] players;
     public static GameManager Instance; // どこからでも参照可能
     public GameObject ChoicePanel; // ポイント取得ボタン
+    public TextMeshProUGUI oxygenText; // 酸素数UI
+    public int oxygen = 50; // 酸素
+    public int baseDecrement = 1; // 毎ターン減る酸素数
+    public int energyCores = 0; // 持っているコア数
 
     private int currentPlayer = 0;
     private bool isMoving = false;
@@ -17,6 +22,8 @@ public class GameManager : MonoBehaviour
     {
         ChoicePanel.SetActive(false);
         dice.OnDiceRolled += OnDiceRolled;
+
+        UpdateOxygenUI();
     }
     // ボタンを押すまでサイコロ不可
     void Update()
@@ -34,6 +41,21 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
     }
+    // 酸素減少
+    void ConsumeOxygen()
+    {
+        int consumption = baseDecrement + energyCores;
+
+        oxygen -= consumption;
+
+        if(oxygen <= 0)
+        {
+            oxygen = 0;
+            GameOver();
+        }
+
+        UpdateOxygenUI();
+    }
     // ターン交代
     void NextTurn()
     {
@@ -48,10 +70,18 @@ public class GameManager : MonoBehaviour
     {
         Next = true;
         isMoving = false;
-        if(Next == true)
-        {
-            NextTurn();
-        }
+        NextTurn();
+
+        ConsumeOxygen();
+    }
+    void GameOver()
+    {
+
+    }
+    // 酸素数ui
+    void UpdateOxygenUI()
+    {
+        oxygenText.text = "" + oxygen;
     }
     // サイコロの結果を受け取る
     void OnDiceRolled(int value)
@@ -87,20 +117,16 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    // ボタン１
+    // 引き返しボタン
     public void OnClickChoice1()
     {
-        Debug.Log("選択1");
-
         ChoicePanel.SetActive(false);
         EndTurn();
     }
 
-    // ボタン2
+    // 何もしないボタン
     public void OnClickChoice2()
     {
-        Debug.Log("選択2");
-
         ChoicePanel.SetActive(false);
         EndTurn();
     }
