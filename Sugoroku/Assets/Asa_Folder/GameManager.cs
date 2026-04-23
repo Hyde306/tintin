@@ -68,11 +68,11 @@ public class GameManager : MonoBehaviour
     }
     void EndTurn()
     {
-        Next = true;
-        isMoving = false;
-        NextTurn();
-
         ConsumeOxygen();
+
+        isMoving = false;
+        Next = true;
+        NextTurn();
     }
     void GameOver()
     {
@@ -96,14 +96,24 @@ public class GameManager : MonoBehaviour
     }
     System.Collections.IEnumerator WaitMove()
     {
-        while (players[currentPlayer].isMoving)
+        PlayerMove movingPlayer = players[currentPlayer];
+
+        while (movingPlayer.isMoving)
         {
             yield return null;
         }
 
-        ChoicePanel.SetActive(true); // UI表示
+        // 戻り状態かチェック
+        if (!movingPlayer.IsReturning())
+        {
+            ChoicePanel.SetActive(true); // まだ選択していないなら表示
+        }
+        else
+        {
+            EndTurn(); // すでに戻り状態ならそのままターン終了
+        }
     }
-    
+
     // そのマスにプレイヤーがいるかチェック
     public bool IsTileOccupied(int index)
     {
@@ -120,6 +130,8 @@ public class GameManager : MonoBehaviour
     // 引き返しボタン
     public void OnClickChoice1()
     {
+        players[currentPlayer].StartReturn();
+
         ChoicePanel.SetActive(false);
         EndTurn();
     }

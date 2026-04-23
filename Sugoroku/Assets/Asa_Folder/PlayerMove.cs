@@ -7,6 +7,9 @@ public class PlayerMove : MonoBehaviour
     public bool isMoving = false; // 移動中かどうか
 
     private int currentIndex = 0;
+    private int direction = 1; // 1前進 -1逆走
+    private bool isReturning = false; // Buttonフラグ
+
     void Start()
     {
         currentIndex = 0;
@@ -25,15 +28,16 @@ public class PlayerMove : MonoBehaviour
 
         for (int i = 0; i < steps; i++)
         {
-            int nextIndex = currentIndex + 1;
-            
-            if (nextIndex >= points.Length) break;
+            int nextIndex = currentIndex + direction;
+
+            if (nextIndex >= points.Length || nextIndex < 0) break;
 
             // 他のプレイヤーがいたらスキップ
             while (GameManager.Instance.IsTileOccupied(nextIndex))
             {
-                nextIndex++;
-                if (nextIndex >= points.Length) break;
+                nextIndex += direction;
+
+                if (nextIndex >= points.Length || nextIndex < 0) break;
             }
 
             currentIndex = nextIndex;
@@ -60,5 +64,16 @@ public class PlayerMove : MonoBehaviour
     public int GetCurrentIndex()
     {
         return currentIndex;
+    }  
+    public void StartReturn()
+    {
+        if (isReturning) return;
+
+        isReturning = true;
+        direction = -1;
+    }
+    public bool IsReturning()
+    {
+        return isReturning;
     }
 }
