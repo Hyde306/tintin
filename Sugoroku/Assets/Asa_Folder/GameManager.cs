@@ -13,15 +13,19 @@ public class GameManager : MonoBehaviour
     public int baseDecrement = 1; // 毎ターン減る酸素数
     public int energyCores = 0; // 持っているコア数
 
-    private int currentPlayer = 0;
+    public static int currentPlayer = 0;
     private bool isMoving = false;
 
     bool Next = true;
 
     void Start()
     {
+        
         ChoicePanel.SetActive(false);
-        dice.OnDiceRolled += OnDiceRolled;
+
+      
+       　dice.OnDiceRolled += OnDiceRolled;
+
 
         UpdateOxygenUI();
     }
@@ -29,12 +33,39 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (isMoving) return;
-
-        if (Keyboard.current.spaceKey.wasPressedThisFrame && Next == true)
+       
+        if(currentPlayer == 0)
         {
-            Next = false;
-            dice.Roll();
+            if (Keyboard.current.spaceKey.wasPressedThisFrame && Next == true && PlayerMove.Player0Goal == false)
+            {
+                Next = false;
+                dice.Roll();
+            }
+            else
+                NextTurn();
         }
+        if (currentPlayer == 1)
+        {
+            if (Keyboard.current.spaceKey.wasPressedThisFrame && Next == true && PlayerMove.Player1Goal == false)
+            {
+                Next = false;
+                dice.Roll();
+            }
+            else
+                NextTurn();
+        }
+        if (currentPlayer == 2)
+        {
+            if (Keyboard.current.spaceKey.wasPressedThisFrame && Next == true && PlayerMove.Player2Goal == false)
+            {
+                Next = false;
+                dice.Roll();
+            }
+            else
+                NextTurn();
+        }
+
+
 
     }
     // ほかのスクリプトからアクセスできるようになる(シングルトン設定)
@@ -62,7 +93,7 @@ public class GameManager : MonoBehaviour
     {
         currentPlayer++;
 
-        if (currentPlayer >= players.Length)
+        if (currentPlayer >= 3)
         {
             currentPlayer = 0;
         }
@@ -89,11 +120,14 @@ public class GameManager : MonoBehaviour
     {
         if (isMoving) return;
 
-        isMoving = true;
+        if (players[currentPlayer])
+        {
+            isMoving = true;
 
-        players[currentPlayer].Move(value);
+            players[currentPlayer].Move(value);
 
-        StartCoroutine(WaitMove());
+            StartCoroutine(WaitMove());
+        }
     }
     System.Collections.IEnumerator WaitMove()
     {

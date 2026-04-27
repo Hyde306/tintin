@@ -1,17 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove1 : MonoBehaviour
 {
     public Transform[] points; // マスの位置
     public bool isMoving = false; // 移動中かどうか
-    public static bool Player0Goal = false;
-    public static bool Player1Goal = false;
-    public static bool Player2Goal = false;
+    public static bool Goal = false;
     private int currentIndex = 0;
     private int direction = 1; // 1前進 -1逆走
     private bool isReturning = false; // Buttonフラグ
-
 
     void Start()
     {
@@ -35,17 +32,9 @@ public class PlayerMove : MonoBehaviour
 
             if (nextIndex >= points.Length || nextIndex < 0) break;
 
-            if (currentIndex <= 4 && isReturning == true && GameManager.currentPlayer == 0)
+            if(currentIndex <= 4 && isReturning == true)
             {
-                Player0Goal = true;
-            }
-            if (currentIndex <= 4 && isReturning == true && GameManager.currentPlayer == 1)
-            {
-                Player1Goal = true;
-            }
-            if (currentIndex <= 4 && isReturning == true && GameManager.currentPlayer == 2)
-            {
-                Player2Goal = true;
+                 Goal = true;
             }
 
             // 他のプレイヤーがいたらスキップ
@@ -81,8 +70,6 @@ public class PlayerMove : MonoBehaviour
     {
         return currentIndex;
     }  
-
-
     public void StartReturn()
     {
         if (isReturning) return;
@@ -90,12 +77,8 @@ public class PlayerMove : MonoBehaviour
         isReturning = true;
         direction = -1;
     }
-
-
-
     public bool IsReturning()
     {
         return isReturning;
     }
-
 }
