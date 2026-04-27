@@ -5,14 +5,14 @@ public class PlayerMove : MonoBehaviour
 {
     public Transform[] points; // マスの位置
     public bool isMoving = false; // 移動中かどうか
-
+    public static bool Goal = false;
     private int currentIndex = 0;
     private int direction = 1; // 1前進 -1逆走
     private bool isReturning = false; // Buttonフラグ
 
     void Start()
     {
-        currentIndex = 0;
+        currentIndex = 4;//0
         transform.position = points[currentIndex].position;
     }
     
@@ -31,6 +31,11 @@ public class PlayerMove : MonoBehaviour
             int nextIndex = currentIndex + direction;
 
             if (nextIndex >= points.Length || nextIndex < 0) break;
+
+            if(currentIndex <= 4 && isReturning == true)
+            {
+                 Goal = true;
+            }
 
             // 他のプレイヤーがいたらスキップ
             while (GameManager.Instance.IsTileOccupied(nextIndex))

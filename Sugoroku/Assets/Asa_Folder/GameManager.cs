@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
             Next = false;
             dice.Roll();
         }
+
     }
     // ほかのスクリプトからアクセスできるようになる(シングルトン設定)
     void Awake()
